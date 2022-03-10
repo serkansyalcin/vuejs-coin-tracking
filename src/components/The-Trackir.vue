@@ -11,7 +11,7 @@
 		<div><div v-if="isClicked" class="popup"><PopUp :coinData="coinData" @addclick="addCoinInfo" @close="closepop"/>
 		</div></div>
 		<div class="addedCoins" ref="addedCoins">
-		
+			<div v-if="refreshing"> refreshing....</div>
 				<AddedCoins :addedCoins="addedCoins" @removeCoin="removeCoin"/>
 		
 		</div>
@@ -41,7 +41,10 @@ export default {
       .catch((err) => {
         console.log(err);
       });
-	
+	setInterval(() => {
+		this.refresh()
+		console.log('ok')
+	}, 600000)
   },
   data() {
     return {
@@ -49,6 +52,7 @@ export default {
       isClicked: false,
       coinData: "",
       addedCoins: [],
+		refreshing: false,
     };
   },
   methods: {
@@ -79,6 +83,7 @@ export default {
       this.addedCoins.splice(index, 1);
     },
    async refresh() {
+	this.refreshing = true;
 	await axios
 			.get("https://api2.binance.com/api/v3/ticker/24hr") //get the all info from binance api
 			.then((res) => {
@@ -107,7 +112,7 @@ export default {
 			this.addCoinInfo(refreshed[i].symbol, refreshed[i].lastPrice, refreshed[i].weightedAvgPrice)
 		}
 		this.addedCoins = refreshed
-
+	this.refreshing = false
     },
   },
 };
