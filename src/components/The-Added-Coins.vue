@@ -24,6 +24,9 @@ export default {
 		border: black solid 1px !important;
 		border-radius: 5px;
 		margin-top: 10px;
+		visibility: visible;
+  -webkit-animation: fadeIn 1s;
+  animation: fadeIn 1s;
 		
 	}
 
@@ -34,5 +37,27 @@ export default {
 		padding: 5px;
 		margin-left: 300px;
 		cursor: pointer;
+		visibility: visible;
+  -webkit-animation: fadeOut 1s;
+  animation: fadeOut 1s
 	}
+
+	@-webkit-keyframes fadeIn {
+  from {opacity: 0;} 
+  to {opacity: 1;}
+}
+
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity:1 ;}
+}
+
+@-webkit-keyframes fadeOut {
+  from {opacity: 1;} 
+  to {opacity: 0;}
+}
+
+@keyframes fadeOut {
+  from {opacity: 1;}
+  to {opacity:0 ;}}
 </style>
