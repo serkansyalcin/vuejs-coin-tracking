@@ -1,6 +1,7 @@
 <template>
     <div >
         <div v-for="(addedCoin, index) in addedCoins" :key="index" class="addedcoins1">
+			<!-- this  remove button emits the remove event to parent components with name removeCoin -->
                     {{addedCoin.symbol}} - {{addedCoin.lastPrice}} - {{addedCoin.weightedAvgPrice}} <span><button class="remove" @click="$emit('removeCoin',addedCoin.symbol)">remove</button></span>
                 
         </div>
