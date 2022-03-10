@@ -2,6 +2,7 @@
 <template>
 	<div class="tracir-body">
 		<div class="refresh-and-add-btn">
+			<button  class= "refresh">Refresh</button>
 			<button @click= "clicked">Add Symbol</button>
 		</div>
 		<div>
@@ -10,9 +11,9 @@
 		<div><div v-if="isClicked" class="popup"><PopUp :coinData="coinData" @addclick="addCoinInfo" @close="closepop"/>
 		</div></div>
 		<div class="addedCoins" ref="addedCoins">
-			<div v-for="(addedCoin, index) in addedCoins" :key="index" class="addedcoins1">
-				{{addedCoin.symbol}} - {{addedCoin.lastPrice}} - {{addedCoin.weightedAvgPrice}} <span><button class="remove">remove</button></span>
-			</div>
+		
+				<AddedCoins :addedCoins="addedCoins" @removeCoin="removeCoin"/>
+		
 		</div>
 		
 	</div>
@@ -21,12 +22,14 @@
 <script>
 	import axios from 'axios';
 	import PopUp from './The-Pop-up.vue';
+	import AddedCoins from './The-Added-Coins.vue'
 
 	export default {
 		name: 'The-Trackir',
 
 		components: {
 		PopUp,
+		AddedCoins,
 	},
 	async mounted(){
 		await axios.get('https://api2.binance.com/api/v3/ticker/24hr')
@@ -65,7 +68,13 @@
 			}, 
 			addToDOM(){
 
+			},
+			removeCoin(symbol){
+				console.log('removedcoin')
+				const index = this.addedCoins.findIndex(coin => coin.symbol === symbol)
+				this.addedCoins.splice(index, 1)
 			}
+			
 		}
 	
 	}
@@ -78,13 +87,14 @@
 		position: absolute;
 		top: 10%;
 		left: 30%;
-		
 		width: 660px;
 		height: 600px;
 		background-color: #ffff;
 		border-radius: 5px;
 	}
-
+	.refresh{
+		margin-right: 20px;
+	}
 	.refresh-and-add-btn {
 		display: flex;
 		align-items: end;
@@ -93,6 +103,7 @@
 		height: 100px;
 		border-bottom: 2px solid black;
 		padding-bottom: 15px;
+		
 	}
 
 	.refresh-and-add-btn button {
@@ -115,29 +126,13 @@
 	}
 	.addedCoins{
 		position: absolute;
-		top: 30%;
+		top: 20%;
 		right: 10%;
 		margin-right: -40px;
 		width: 90%;
-		overflow-y: scroll;
 		z-index: 1;
 	}
-	.addedcoins1{
-		display: flex;
-		justify-content: space-between;
-		padding: 5px;
-		border: black solid 1px !important;
-		border-radius: 5px;
-		margin-top: 10px;
-		
-	}
-	.remove{
-		background-color: #F8B1AC;
-		border: none;
-		border-radius: 5px;
-		padding: 5px;
-		margin-left: 10px;
-		cursor: pointer;
-	}
+	
+	
 	
 </style>
