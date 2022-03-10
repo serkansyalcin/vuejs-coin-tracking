@@ -58,11 +58,14 @@
 				this.isClicked = !this.isClicked;
 			},
 			addCoinInfo (symbol, lastPrice, weightedAvgPrice) {
-				this.addedCoins.push({
+				if(this.addedCoins.findIndex(coin => coin.symbol === symbol)){
+					this.addedCoins.push({
 					symbol: symbol,
 					lastPrice: lastPrice,
 					weightedAvgPrice: weightedAvgPrice
 				})
+				}
+				
 				console.log(this.addedCoins)
 				
 			}, 
@@ -71,6 +74,7 @@
 			},
 			removeCoin(symbol){
 				console.log('removedcoin')
+
 				const index = this.addedCoins.findIndex(coin => coin.symbol === symbol)
 				this.addedCoins.splice(index, 1)
 			}
