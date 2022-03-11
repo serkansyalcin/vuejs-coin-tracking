@@ -1,10 +1,10 @@
 <template>
 	<div class= "coins-container">
-		<div class= "search"><span><input type="text" placeholder="search"></span><span @click="$emit('close')" style="cursor: pointer">X close</span></div>
+		<div class= "search"><span><input type="text" placeholder="search symbols" class ="search-field"></span><span @click="$emit('close')" style="cursor: pointer">X close</span></div>
 		<!-- <div>{{selected}}</div> -->
-		<div v-for="(coin,index) in coinData" :key="index" class="select-coin"> 
-			{{coin.symbol}} - {{coin.lastPrice}} 
-			<button class="button-add" @click="$emit('addclick', coin.symbol, coin.lastPrice, coin.weightedAvgPrice), disabled1()" :disabled="!disable">add</button>
+		<div v-for="(coin,index) in coinData" :key="index" class="select-coin" :class="uniqueClass(index)"> 
+			{{coin.symbol}} - {{coin.lastPrice}} {{index}}
+			<button class="button-add" @click="$emit('addclick', coin.symbol, coin.lastPrice, coin.weightedAvgPrice), disabled1(index)" :disabled="!disable">add</button>
 		</div>
 	
 	</div>
@@ -27,7 +27,11 @@
 		methods:{
 			disabled1(){
 				
-			}
+			},
+			uniqueClass(index){
+				return `coin${index}`
+			},
+			
 		}
 
 	}
@@ -68,5 +72,11 @@
 		justify-content: space-between;
 		border-radius: 10px;
 		margin-top: 10px;
+	}
+	.search-field{
+		width: 500px;
+		height: 30px;
+		border-radius: 5px;
+		border: black solid 1px;
 	}
 </style>
