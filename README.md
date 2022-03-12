@@ -1,4 +1,6 @@
-# vue
+# vue.js Coin İzleme Uygulaması
+
+İstediğiniz Kripto para birimini seçerek değerlerini anlık olarak takip edebilirisniz.
 
 ## Project setup
 ```
